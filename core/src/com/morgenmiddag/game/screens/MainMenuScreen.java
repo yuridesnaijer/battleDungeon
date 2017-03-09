@@ -95,7 +95,7 @@ public class MainMenuScreen implements Screen {
         buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                app.setScreen(app.playScreen);
+                app.setScreen(app.playScreen);
             }
         });
 

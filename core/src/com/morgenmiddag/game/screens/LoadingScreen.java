@@ -25,6 +25,7 @@ public class LoadingScreen implements Screen {
     private void queueAssets() {
         game.assets.load("img/splash.png", Texture.class);
         game.assets.load("ui/uiskin.atlas", TextureAtlas.class);
+        game.assets.load("sprites/badlogic.jpg", Texture.class);
     }
 
     @Override
@@ -38,6 +39,11 @@ public class LoadingScreen implements Screen {
     private void update(float delta) {
         progress = MathUtils.lerp(progress, game.assets.getProgress(), .1f);
         if (game.assets.update() && progress >= game.assets.getProgress() - .001f) {
+            if (Game.DEBUG) {
+                game.setScreen(game.playScreen);
+                return;
+            }
+
             game.setScreen(game.splashScreen);
         }
     }

@@ -1,17 +1,14 @@
 package com.morgenmiddag.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.morgenmiddag.game.screens.MainMenuScreen;
-//import com.morgenmiddag.game.screens.PlayScreen;
+import com.morgenmiddag.game.screens.PlayScreen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.morgenmiddag.game.screens.SplashScreen;
@@ -23,6 +20,7 @@ public class Game extends com.badlogic.gdx.Game {
 	public static final float VERSION = .8f;
 	public static final int V_WIDTH = 480;
 	public static final int V_HEIGHT = 420;
+	public static final boolean DEBUG = true;
 
 	public OrthographicCamera camera;
 	public SpriteBatch batch;
@@ -34,7 +32,7 @@ public class Game extends com.badlogic.gdx.Game {
 	public LoadingScreen loadingScreen;
 	public SplashScreen splashScreen;
 	public MainMenuScreen mainMenuScreen;
-	//public PlayScreen playScreen;
+	public PlayScreen playScreen;
 	
 	@Override
 	public void create () {
@@ -48,7 +46,7 @@ public class Game extends com.badlogic.gdx.Game {
 		loadingScreen = new LoadingScreen(this);
 		splashScreen = new SplashScreen(this);
 		mainMenuScreen = new MainMenuScreen(this);
-		//playScreen = new PlayScreen(this);
+		playScreen = new PlayScreen(this);
 
 		this.setScreen(loadingScreen);
 	}
@@ -70,7 +68,7 @@ public class Game extends com.badlogic.gdx.Game {
 		loadingScreen.dispose();
 		splashScreen.dispose();
 		mainMenuScreen.dispose();
-		//playScreen.dispose();
+		playScreen.dispose();
 	}
 
 	private void initFonts() {

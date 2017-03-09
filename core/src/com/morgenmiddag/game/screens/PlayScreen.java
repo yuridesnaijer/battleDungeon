@@ -1,5 +1,75 @@
-//package com.morgenmiddag.game.screens;
-//
+package com.morgenmiddag.game.screens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.morgenmiddag.game.Actors.Npc.Enemy;
+import com.morgenmiddag.game.Actors.Yuri;
+import com.morgenmiddag.game.Game;
+import com.morgenmiddag.game.InputHandler;
+
+public class PlayScreen implements Screen{
+
+    private Game game;
+    private Yuri yuri;
+
+    private Enemy enemy;
+
+    private SpriteBatch spriteBatch;
+
+    public PlayScreen(final Game game){
+        this.game = game;
+    }
+
+    @Override
+    public void show() {
+        spriteBatch = new SpriteBatch();
+        yuri = new Yuri(this.game);
+
+        enemy = new Enemy(this.game);
+
+        Gdx.input.setInputProcessor(new InputHandler(yuri));
+    }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        spriteBatch.begin();
+        yuri.render(spriteBatch);
+        enemy.render(spriteBatch);
+        spriteBatch.end();
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+}
+
 //import com.badlogic.gdx.Gdx;
 //import com.badlogic.gdx.Screen;
 //import com.badlogic.gdx.graphics.GL20;
@@ -11,13 +81,12 @@
 //import com.badlogic.gdx.scenes.scene2d.ui.Label;
 //import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 //import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-//import com.badlogic.gdx.scenes.scene2d.utils.Align;
 //import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+//import com.badlogic.gdx.utils.Align;
 //import com.badlogic.gdx.utils.Array;
 //import com.badlogic.gdx.utils.viewport.FitViewport;
-//import com.badlogic.gdx.utils.viewport.StretchViewport;
+//import com.morgenmiddag.game.Actors.SlideButton;
 //import com.morgenmiddag.game.Game;
-////import com.cnnranderson.slidez.actors.SlideButton;
 //
 //import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 //
