@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.morgenmiddag.game.Actors.Actor;
 import com.morgenmiddag.game.Actors.Npc.Enemy;
 import com.morgenmiddag.game.Actors.Yuri;
 import com.morgenmiddag.game.Game;
@@ -28,6 +30,7 @@ public class PlayScreen implements Screen{
         yuri = new Yuri(this.game);
 
         enemy = new Enemy(this.game);
+        game.actorList.add(enemy);
 
         Gdx.input.setInputProcessor(new InputHandler(yuri));
     }

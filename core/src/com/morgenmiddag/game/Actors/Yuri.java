@@ -3,14 +3,14 @@ package com.morgenmiddag.game.Actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.morgenmiddag.game.Game;
 
-public class Yuri {
+public class Yuri extends Actor{
 
-    // Location properties
-    private Vector2 position;
     private final Float movementSpeed = 350.0f;
+    private final Game game;
 
     // Input properties
     boolean leftMove = false;
@@ -22,14 +22,25 @@ public class Yuri {
     private Texture texture;
 
 
-    public Yuri(Game game){
-        texture = game.assets.get("sprites/badlogic.jpg", Texture.class);
+    public Yuri(Game _game){
+        super();
 
+        game = _game;
+        texture = game.assets.get("sprites/badlogic.jpg", Texture.class);
         position = new Vector2();
+        bounds = new Rectangle(position.x, position.y, texture.getHeight(), texture.getWidth());;
     }
 
-
     private void updateMotion() {
+
+        for(Actor actor : game.actorList) {
+            if(bounds.overlaps(actor.getBounds())) {
+                Gdx.app.log("Collision", "Collision!" + actor.getClass().toString());
+
+            }
+        }
+
+
         if (leftMove)
         {
             position.x -= movementSpeed * Gdx.graphics.getDeltaTime();
@@ -46,6 +57,8 @@ public class Yuri {
         {
             position.y -= movementSpeed * Gdx.graphics.getDeltaTime();
         }
+
+        bounds.setPosition(position);
     }
 
     public void setLeftMove(boolean t)

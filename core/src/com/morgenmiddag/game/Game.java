@@ -7,12 +7,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.utils.Array;
+import com.morgenmiddag.game.Actors.Actor;
 import com.morgenmiddag.game.screens.MainMenuScreen;
 import com.morgenmiddag.game.screens.PlayScreen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.morgenmiddag.game.screens.SplashScreen;
 import com.morgenmiddag.game.screens.LoadingScreen;
+
+import java.util.ArrayList;
 
 public class Game extends com.badlogic.gdx.Game {
 
@@ -28,6 +32,7 @@ public class Game extends com.badlogic.gdx.Game {
 	public BitmapFont font24;
 
 	public AssetManager assets;
+	public ArrayList<Actor> actorList;
 
 	public LoadingScreen loadingScreen;
 	public SplashScreen splashScreen;
@@ -37,6 +42,8 @@ public class Game extends com.badlogic.gdx.Game {
 	@Override
 	public void create () {
 		assets = new AssetManager();
+		actorList = new ArrayList<Actor>();
+
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		batch = new SpriteBatch();
