@@ -5,7 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.morgenmiddag.game.Actors.Npc.Enemy;
@@ -39,7 +41,7 @@ public class PlayScreen implements Screen{
         camera.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
         camera.translate(Game.V_WIDTH / 2, Game.V_HEIGHT / 2);
 
-        yuri = new Yuri(this.game);
+        yuri = new Yuri(this.game, map);
         enemy = new Enemy(this.game);
         game.actorList.add(enemy);
 

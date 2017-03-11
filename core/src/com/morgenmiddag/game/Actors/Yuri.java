@@ -3,14 +3,18 @@ package com.morgenmiddag.game.Actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.morgenmiddag.game.Game;
 
 public class Yuri extends Actor{
 
     private final Float movementSpeed = 350.0f;
     private final Game game;
+    private final TiledMap map;
 
     // Input properties
     boolean leftMove = false;
@@ -22,13 +26,14 @@ public class Yuri extends Actor{
     private Texture texture;
 
 
-    public Yuri(Game _game){
+    public Yuri(Game _game, TiledMap _map){
         super();
 
         game = _game;
+        map = _map;
         texture = game.assets.get("sprites/playerSprite.png", Texture.class);
         position = new Vector2();
-        bounds = new Rectangle(position.x, position.y, texture.getHeight(), texture.getWidth());;
+        bounds = new Rectangle(position.x, position.y, texture.getHeight(), texture.getWidth());
     }
 
     private void updateMotion() {
@@ -43,17 +48,19 @@ public class Yuri extends Actor{
 
         if (leftMove)
         {
-            position.x -= movementSpeed * Gdx.graphics.getDeltaTime();
+            if(!tileCollides("left")) {
+                position.x -= movementSpeed * Gdx.graphics.getDeltaTime();
+            }
         }
-        if (rightMove)
+        if (rightMove && !tileCollides("right"))
         {
             position.x += movementSpeed * Gdx.graphics.getDeltaTime();
         }
-        if (upMove)
+        if (upMove && !tileCollides("up"))
         {
             position.y += movementSpeed * Gdx.graphics.getDeltaTime();
         }
-        if (downMove)
+        if (downMove && !tileCollides("down"))
         {
             position.y -= movementSpeed * Gdx.graphics.getDeltaTime();
         }
@@ -91,6 +98,31 @@ public class Yuri extends Actor{
 
     private void update(){
         updateMotion();
+    }
+
+    private boolean tileCollides(String side){
+        // TODO: Use bounds instead of position
+        TiledMapTileLayer mapLayer = (TiledMapTileLayer) map.getLayers().get(0);
+        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
+
+        if(side.equals("left")) {
+            cell = mapLayer.getCell((int) (position.x / mapLayer.getTileWidth()), (int) (position.y / mapLayer.getTileHeight()));
+        }
+        if(side.equals("right")) {
+            cell = mapLayer.getCell((int) ((position.x + bounds.width) / mapLayer.getTileWidth()), (int) ((position.y + bounds.height) / mapLayer.getTileHeight()));
+        }
+        if(side.equals("up")) {
+            cell = mapLayer.getCell((int) ((position.x) / mapLayer.getTileWidth()), (int) ((position.y + bounds.height) / mapLayer.getTileHeight()));
+        }
+        if(side.equals("down")) {
+            cell = mapLayer.getCell((int) ((position.x) / mapLayer.getTileWidth()), (int) ((position.y) / mapLayer.getTileHeight()));
+        }
+
+        if(cell != null) {
+            Gdx.app.log("Tile id:", "" + cell.getTile().getProperties().containsKey("collision"));
+            return cell.getTile().getProperties().containsKey("collision");
+        }
+        return false;
     }
 
     public void render(SpriteBatch spriteBatch){

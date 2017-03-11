@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Game extends com.badlogic.gdx.Game {
 
-	public static final String TITLE = "Slidez";
+	public static final String TITLE = "BattleDungeon";
 	public static final float VERSION = .8f;
 	public static final int V_WIDTH = 1280;
 	public static final int V_HEIGHT = 720;
