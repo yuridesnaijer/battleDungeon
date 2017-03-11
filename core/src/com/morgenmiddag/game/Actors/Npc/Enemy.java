@@ -17,7 +17,7 @@ public class Enemy extends Actor{
     private Texture texture;
 
     public Enemy(Game game) {
-        texture = game.assets.get("sprites/badlogic.jpg", Texture.class);
+        texture = game.assets.get("sprites/playerSprite.png", Texture.class);
 
         position = new Vector2(100, 100);
         bounds = new Rectangle(position.x, position.y, texture.getHeight(), texture.getWidth());

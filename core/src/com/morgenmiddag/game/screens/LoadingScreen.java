@@ -2,11 +2,14 @@ package com.morgenmiddag.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
 import com.morgenmiddag.game.Game;
 
@@ -20,12 +23,15 @@ public class LoadingScreen implements Screen {
     public LoadingScreen(final Game game) {
         this.game = game;
         this.shapeRenderer = new ShapeRenderer();
+
+        game.assets.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
     }
 
     private void queueAssets() {
         game.assets.load("img/splash.png", Texture.class);
         game.assets.load("ui/uiskin.atlas", TextureAtlas.class);
-        game.assets.load("sprites/badlogic.jpg", Texture.class);
+        game.assets.load("sprites/playerSprite.png", Texture.class);
+        game.assets.load("maps/map.tmx", TiledMap.class);
     }
 
     @Override

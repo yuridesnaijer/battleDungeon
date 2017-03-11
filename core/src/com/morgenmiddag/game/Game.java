@@ -22,8 +22,8 @@ public class Game extends com.badlogic.gdx.Game {
 
 	public static final String TITLE = "Slidez";
 	public static final float VERSION = .8f;
-	public static final int V_WIDTH = 480;
-	public static final int V_HEIGHT = 420;
+	public static final int V_WIDTH = 1280;
+	public static final int V_HEIGHT = 720;
 	public static final boolean DEBUG = true;
 
 	public OrthographicCamera camera;
@@ -46,6 +46,7 @@ public class Game extends com.badlogic.gdx.Game {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
+        camera.translate(V_WIDTH / 2, V_HEIGHT / 2);
 		batch = new SpriteBatch();
 
 		initFonts();
@@ -69,6 +70,8 @@ public class Game extends com.badlogic.gdx.Game {
 	
 	@Override
 	public void dispose () {
+		super.dispose();
+
 		batch.dispose();
 		font24.dispose();
 		assets.dispose();
