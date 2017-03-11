@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.morgenmiddag.game.Actors.Npc.Enemy;
 import com.morgenmiddag.game.Actors.Yuri;
 import com.morgenmiddag.game.Game;
+import com.morgenmiddag.game.Hud;
 import com.morgenmiddag.game.InputHandler;
 
 public class PlayScreen implements Screen{
@@ -21,6 +22,7 @@ public class PlayScreen implements Screen{
 
     private Game game;
     private TiledMap map;
+    private Hud hud;
     private Yuri yuri;
     private Enemy enemy;
 
@@ -45,6 +47,9 @@ public class PlayScreen implements Screen{
         enemy = new Enemy(this.game);
         game.actorList.add(enemy);
 
+        hud = new Hud(spriteBatch, yuri);
+        yuri.attachHud(hud);
+
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1f);
         mapRenderer.setView(camera);
         Gdx.input.setInputProcessor(new InputHandler(yuri));
@@ -66,6 +71,9 @@ public class PlayScreen implements Screen{
         yuri.render(spriteBatch);
         enemy.render(spriteBatch);
         spriteBatch.end();
+
+        hud.stage.act();
+        hud.stage.draw();
 
     }
 

@@ -9,12 +9,17 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.morgenmiddag.game.Game;
+import com.morgenmiddag.game.Hud;
 
 public class Yuri extends Actor{
 
-    private final Float movementSpeed = 350.0f;
     private final Game game;
     private final TiledMap map;
+    private Hud hud;
+
+    // Character properties
+    private int hitPoints = 120;
+    private Float movementSpeed = 350.0f;
 
     // Input properties
     boolean leftMove = false;
@@ -38,19 +43,17 @@ public class Yuri extends Actor{
 
     private void updateMotion() {
 
+        // Check collision with other actors
         for(Actor actor : game.actorList) {
             if(bounds.overlaps(actor.getBounds())) {
                 Gdx.app.log("Collision", "Collision!" + actor.getClass().toString());
+                changeHitPoints(-5);
 
             }
         }
 
-
-        if (leftMove)
-        {
-            if(!tileCollides("left")) {
-                position.x -= movementSpeed * Gdx.graphics.getDeltaTime();
-            }
+        if (leftMove && !tileCollides("left")) {
+            position.x -= movementSpeed * Gdx.graphics.getDeltaTime();
         }
         if (rightMove && !tileCollides("right"))
         {
@@ -66,10 +69,6 @@ public class Yuri extends Actor{
         }
 
         bounds.setPosition(position);
-    }
-
-    public Vector2 getPosition() {
-        return this.position;
     }
 
     public void setLeftMove(boolean t)
@@ -96,10 +95,28 @@ public class Yuri extends Actor{
         rightMove = t;
     }
 
+    public void attachHud(Hud _hud){
+        hud = _hud;
+    }
+
+    public int getHitPoints() {
+        return hitPoints;
+    }
+
+    public void changeHitPoints(int modifier){
+        hitPoints += modifier;
+        hud.setHitPoints(hitPoints);
+    }
+
     private void update(){
         updateMotion();
     }
 
+    /**
+     * This method checks if the tile you are heading to you collides
+     * @param side
+     * @return
+     */
     private boolean tileCollides(String side){
         // TODO: Use bounds instead of position
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) map.getLayers().get(0);
@@ -119,10 +136,10 @@ public class Yuri extends Actor{
         }
 
         if(cell != null) {
-            Gdx.app.log("Tile id:", "" + cell.getTile().getProperties().containsKey("collision"));
+            Gdx.app.log("Tile collision:", "" + cell.getTile().getProperties().containsKey("collision"));
             return cell.getTile().getProperties().containsKey("collision");
         }
-        return false;
+        return true;
     }
 
     public void render(SpriteBatch spriteBatch){

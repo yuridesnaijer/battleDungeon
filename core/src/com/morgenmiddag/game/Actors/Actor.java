@@ -13,6 +13,9 @@ public class Actor {
 
     }
 
+    public Vector2 getPosition() {
+        return this.position;
+    }
     protected Rectangle getBounds() {
         return this.bounds;
     }
